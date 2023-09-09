@@ -1,5 +1,5 @@
 module steamlocate-go
 
-go 1.21.0
+go 1.20
 
-require github.com/andygrunwald/vdf v1.1.0 // indirect
+require github.com/andygrunwald/vdf v1.1.0
