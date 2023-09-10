@@ -9,6 +9,7 @@ import (
 	"runtime"
 
 	"github.com/andygrunwald/vdf"
+	// "golang.org/x/sys"
 )
 
 type SteamApp struct {
