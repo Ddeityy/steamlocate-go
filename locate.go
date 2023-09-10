@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"runtime"
 
 	"github.com/andygrunwald/vdf"
 )
@@ -36,7 +37,14 @@ func locateHomeDir() string {
 	return os.Getenv("HOME")
 }
 
-func locateSteamDir() string {
+func locateSteamDirLinux() string {
+	switch runtime.GOOS {
+	case "windows":
+		return ""
+
+	case "linux":
+
+	}
 	homeDir := locateHomeDir()
 	dir := path.Join(homeDir, ".steam", "steam")
 	steamdDir, _ := filepath.Glob(dir)
@@ -44,6 +52,40 @@ func locateSteamDir() string {
 		return steamdDir[0]
 	}
 	panic("Could not locate steam directory.")
+}
+
+// import "golang.org/x/sys" is broken, lovely
+// func locateSteamDirWindows(arch int) string {
+
+// 	k, err := sys.windows.registry.OpenKey(sys.windows.registry.LOCAL_MACHINE, `SOFTWARE\Microsoft\Windows NT\CurrentVersion`, sys.windows.registry.QUERY_VALUE)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer k.Close()
+
+// 	s, _, err := k.GetStringValue("SystemRoot")
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	fmt.Println(s)
+// 	return ""
+
+// }
+
+func (s *SteamDir) locateDir() string {
+	switch runtime.GOOS {
+	case "windows":
+		switch runtime.GOARCH {
+		case "amd64":
+			return "" // locateSteamDirWindows(64)
+		case "386":
+			return "" // locateSteamDirWindows(32)
+		}
+
+	case "linux":
+		return locateSteamDirLinux()
+	}
+	panic("This operating system is not supported.")
 }
 
 func PrettyPrint(v interface{}) (err error) {
@@ -55,7 +97,7 @@ func PrettyPrint(v interface{}) (err error) {
 }
 
 func getGameName(id int) string {
-	dir := path.Join(locateSteamDir(), "steamapps")
+	dir := path.Join(locateSteamDirLinux(), "steamapps")
 
 	f, err := os.Open(path.Join(dir, fmt.Sprintf("appmanifest_%d.acf", id)))
 	if err != nil {
