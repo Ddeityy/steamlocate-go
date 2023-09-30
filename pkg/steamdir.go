@@ -8,7 +8,7 @@ import (
 
 type SteamDir struct {
 	Path           string
-	Apps           Apps
+	SteamApps      SteamApps
 	LibraryFolders LibraryFolders
 }
 

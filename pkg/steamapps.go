@@ -1,32 +1,39 @@
 package steamlocate
 
-type Apps struct {
-	Apps       map[int]App
-	Discovered bool
+import (
+	"fmt"
+	"path"
+	"strconv"
+)
+
+type SteamApps struct {
+	SteamApps map[int]App
 }
 
-// func (s *Apps) Discover() {
-// 	var dir SteamDir
-// 	dir.Locate()
+func (s *SteamApps) Discover() {
+	var steamDir SteamDir
+	steamDir.Locate()
+	steamApps := path.Join(steamDir.Path, "steamapps")
+	libf := path.Join(steamApps, "libraryfolders.vdf")
 
-// 	steamapps := path.Join(dir.Path, "steamapps")
+	appIds := make([]string, 0)
 
-// 	f, err := os.Open(path.Join(steamapps, fmt.Sprintf("appmanifest_%d.acf")))
-// 	if err != nil {
-// 		log.Fatalf("%s", err)
-// 	}
+	k := ParseVDF(libf)
 
-// 	p := vdf.NewParser(f)
+	fmt.Println(len(k.MapKeys("libraryfolders.0.apps")))
 
-// 	m, err := p.Parse()
-// 	if err != nil {
-// 		log.Fatalf("%s", err)
-// 	}
+	for i := range k.MapKeys("libraryfolders") {
+		appIds = append(appIds, k.MapKeys(fmt.Sprintf("libraryfolders.%d.apps", i))...)
+	}
 
-// name := m["AppState"].(map[string]interface{})["name"].(string)
-// installDir := m["AppState"].(map[string]interface{})["installdir"].(string)
-// if err != nil {
-// 	log.Fatalf("%s", err)
-// }
+	s.SteamApps = make(map[int]App)
 
-//}
+	for _, value := range appIds {
+		id, err := strconv.Atoi(value)
+		if err != nil {
+			panic(err)
+		}
+		app := newApp(steamApps, id)
+		s.SteamApps[id] = app
+	}
+}

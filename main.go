@@ -9,8 +9,6 @@ func main() {
 	var s steamlocate.SteamDir
 
 	s.Locate()
-
-	s.LibraryFolders.Discover(s.Path)
-	fmt.Println(s.LibraryFolders.Paths)
-
+	s.SteamApps.Discover()
+	fmt.Println(s.SteamApps)
 }
