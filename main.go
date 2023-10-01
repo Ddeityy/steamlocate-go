@@ -1,14 +1,14 @@
 package main
 
 import (
-	"fmt"
 	steamlocate "steamlocate/pkg"
+
+	"github.com/kr/pretty"
 )
 
 func main() {
 	var s steamlocate.SteamDir
 
-	s.Locate()
 	s.SteamApps.Discover()
-	fmt.Println(s.SteamApps)
+	pretty.Println(s.SteamApps.Apps[440].Path)
 }

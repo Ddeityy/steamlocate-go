@@ -7,7 +7,8 @@ import (
 )
 
 type SteamApps struct {
-	SteamApps map[int]App
+	Path string
+	Apps map[int]App
 }
 
 func (s *SteamApps) Discover() {
@@ -20,13 +21,13 @@ func (s *SteamApps) Discover() {
 
 	k := ParseVDF(libf)
 
-	fmt.Println(len(k.MapKeys("libraryfolders.0.apps")))
-
 	for i := range k.MapKeys("libraryfolders") {
 		appIds = append(appIds, k.MapKeys(fmt.Sprintf("libraryfolders.%d.apps", i))...)
 	}
 
-	s.SteamApps = make(map[int]App)
+	s.Path = steamApps
+
+	s.Apps = make(map[int]App)
 
 	for _, value := range appIds {
 		id, err := strconv.Atoi(value)
@@ -34,6 +35,6 @@ func (s *SteamApps) Discover() {
 			panic(err)
 		}
 		app := newApp(steamApps, id)
-		s.SteamApps[id] = app
+		s.Apps[id] = app
 	}
 }
