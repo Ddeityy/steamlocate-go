@@ -9,7 +9,7 @@ type LibraryFolders struct {
 	Paths []string
 }
 
-func (lf *LibraryFolders) Discover(p string) {
+func (lf *LibraryFolders) discover(p string) {
 
 	vdfPath := path.Join(p, "steamapps", "libraryfolders.vdf")
 

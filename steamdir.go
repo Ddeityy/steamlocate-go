@@ -36,6 +36,10 @@ func (s *SteamDir) Locate() {
 		s.Path = flatpakInstall
 		return
 	}
+
+	s.LibraryFolders.discover(steamPath)
+	s.SteamApps.discover()
+
 }
 
 func locateHomeDir() string {

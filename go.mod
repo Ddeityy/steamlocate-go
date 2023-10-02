@@ -5,12 +5,11 @@ go 1.21.0
 require (
 	github.com/andygrunwald/vdf v1.1.0
 	github.com/knadh/koanf v1.5.0
+	github.com/kr/pretty v0.3.1
 )
 
 require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
-	github.com/knadh/koanf/v2 v2.0.1 // indirect
-	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect

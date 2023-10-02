@@ -11,7 +11,7 @@ type SteamApps struct {
 	Apps map[int]App
 }
 
-func (s *SteamApps) Discover() {
+func (s *SteamApps) discover() {
 	var steamDir SteamDir
 	steamDir.Locate()
 	steamApps := path.Join(steamDir.Path, "steamapps")
