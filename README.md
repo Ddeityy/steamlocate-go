@@ -11,6 +11,7 @@ $ go get -u github.com/Ddeityy/steamlocate-go
 ```
 
 ##TODO
+* Doc-comments
 * Shortcuts (non-steam games)
 * Steam compatibility tools (proton)
 
