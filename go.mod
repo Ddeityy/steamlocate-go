@@ -1,4 +1,4 @@
-module steamlocate
+module github.com/ddeityy/steamlocate-go
 
 go 1.21.0
 
