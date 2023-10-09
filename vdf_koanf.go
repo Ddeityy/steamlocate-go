@@ -6,7 +6,11 @@ import (
 	"fmt"
 	"strings"
 
+	"log"
+
 	"github.com/andygrunwald/vdf"
+	"github.com/knadh/koanf"
+	"github.com/knadh/koanf/providers/file"
 )
 
 type VDF struct{}
@@ -14,6 +18,15 @@ type VDF struct{}
 // Parser returns a VDF Parser.
 func Parser() *VDF {
 	return &VDF{}
+}
+
+func parseVDF(vdfpath string) *koanf.Koanf {
+	var k = koanf.New(".")
+
+	if err := k.Load(file.Provider(vdfpath), Parser()); err != nil {
+		log.Fatalf("error loading config: %v", err)
+	}
+	return k
 }
 
 // Unmarshal parses the given VDF bytes.

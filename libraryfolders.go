@@ -13,7 +13,7 @@ func (lf *LibraryFolders) discover(p string) {
 
 	vdfPath := path.Join(p, "steamapps", "libraryfolders.vdf")
 
-	var k = ParseVDF(vdfPath)
+	var k = parseVDF(vdfPath)
 
 	for i := 0; i < len(k.MapKeys("libraryfolders")); i++ {
 		lbf := k.String(fmt.Sprintf("libraryfolders.%d.path", i))

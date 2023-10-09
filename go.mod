@@ -16,5 +16,5 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 )

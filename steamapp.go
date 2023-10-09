@@ -13,7 +13,7 @@ type App struct {
 
 func newApp(steamappsPath string, id int) App {
 	vdfPath := path.Join(steamappsPath, fmt.Sprintf("appmanifest_%d.acf", id))
-	k := ParseVDF(vdfPath)
+	k := parseVDF(vdfPath)
 
 	path := path.Join(steamappsPath, "common", k.String("AppState.installdir"))
 

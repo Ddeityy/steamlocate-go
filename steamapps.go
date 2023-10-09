@@ -12,14 +12,14 @@ type SteamApps struct {
 }
 
 func (s *SteamApps) discover() {
-	var steamDir SteamDir
-	steamDir.Locate()
-	steamApps := path.Join(steamDir.Path, "steamapps")
+	var steam SteamDir
+	steam.Locate()
+	steamApps := path.Join(steam.Path, "steamapps")
 	libf := path.Join(steamApps, "libraryfolders.vdf")
 
 	appIds := make([]string, 0)
 
-	k := ParseVDF(libf)
+	k := parseVDF(libf)
 
 	for i := range k.MapKeys("libraryfolders") {
 		appIds = append(appIds, k.MapKeys(fmt.Sprintf("libraryfolders.%d.apps", i))...)
