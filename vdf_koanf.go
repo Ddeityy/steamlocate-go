@@ -20,6 +20,7 @@ func Parser() *VDF {
 	return &VDF{}
 }
 
+// Shorthand to get a Koanf vdf parser
 func parseVDF(vdfpath string) *koanf.Koanf {
 	var k = koanf.New(".")
 
@@ -53,6 +54,8 @@ func (p *VDF) Marshal(o map[string]interface{}) ([]byte, error) {
 
 // I'll remove this when
 // https://github.com/andygrunwald/vdf/pull/55 gets merged.
+
+// Converts a nested map[string]interface{} to a valid VDF string.
 func newDumper(vdfMap map[string]interface{}) (string, error) {
 	var outBuilder strings.Builder
 	err := recursiveMap(vdfMap, 0, &outBuilder)
@@ -62,6 +65,7 @@ func newDumper(vdfMap map[string]interface{}) (string, error) {
 	return outBuilder.String(), nil
 }
 
+// Recursively convert a map[string]interface to a string.
 func recursiveMap(m map[string]interface{}, depth int, outBuilder *strings.Builder) error {
 	for key, value := range m {
 		switch valueType := value.(type) {

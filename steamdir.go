@@ -6,6 +6,7 @@ type SteamDir struct {
 	LibraryFolders LibraryFolders
 }
 
+// Initializes the SteamDir struct and locates everything.
 func (s *SteamDir) Locate() {
 	s.locate()
 }
