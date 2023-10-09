@@ -1,19 +1,19 @@
 # steamlocate
 
-A (worse) go version of [steamlocate-rs](https://github.com/WilliamVenner/steamlocate-rs) which locates any Steam application on the filesystem, and/or the Steam installation itself.
+A (worse) Go version of [steamlocate-rs](https://github.com/WilliamVenner/steamlocate-rs) which locates any Steam installation and Steam application on the filesystem.
 
-**This library only supports Linux for now.**
+**This library supports Linux, Windows and Macos.**
+
+##TODO
+* Shortcuts (non-steam games)
+* Steam compatibility tools (proton etc.)
+
 
 ## Using steamlocate
 Download:
 ```console
 $ go get -u github.com/Ddeityy/steamlocate-go
 ```
-
-##TODO
-* Doc-comments
-* Shortcuts (non-steam games)
-* Steam compatibility tools (proton)
 
 ## Examples
 
@@ -71,7 +71,7 @@ fmt.Println(s.LibraryFolders.Paths)
 ```go
 {
     "/home/$USER/.steam/steam/steamapps"
-    "/home/$USER/second_drive/steam/steamapps"
+    "/second_drive/steam/steamapps"
     ...
 }
 ```
