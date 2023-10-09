@@ -22,23 +22,26 @@ func (s *SteamDir) locate() {
 	standardInstall := path.Join(homeDir, steamPath)
 
 	if _, err := os.Stat(standardInstall); os.IsNotExist(err) {
-		log.Fatalf("%s", err)
-	} else {
-		s.Path = standardInstall
-		return
+		log.Println("Standard installation not found")
 	}
+	s.Path = standardInstall
+	s.LibraryFolders.discover(standardInstall)
+	s.SteamApps.discover()
+	return
+
 
 	// Check flatpak installation
 	var flatpakInstall string = path.Join(homeDir, ".var", "app", "com.valvesoftware.Steam", steamPath)
 
 	if _, err := os.Stat(flatpakInstall); os.IsNotExist(err) {
-		log.Fatalf("%s", err)
+		log.Println("Flatpak installation not found")
 	} else {
 		s.Path = flatpakInstall
+		s.LibraryFolders.discover(flatpakInstall)
+		s.SteamApps.discover()
 		return
 	}
 
-	s.LibraryFolders.discover(steamPath)
-	s.SteamApps.discover()
+	log.Fatalf("No steam installations found.")
 
 }
