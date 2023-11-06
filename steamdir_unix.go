@@ -26,7 +26,7 @@ func (s *SteamDir) locate() {
 	} else {
 		s.Path = standardInstall
 		s.LibraryFolders.discover(standardInstall)
-		s.SteamApps.discover()
+		s.SteamApps.discover(standardInstall)
 		return
 	}
 
@@ -38,7 +38,7 @@ func (s *SteamDir) locate() {
 	} else {
 		s.Path = flatpakInstall
 		s.LibraryFolders.discover(flatpakInstall)
-		s.SteamApps.discover()
+		s.SteamApps.discover(flatpakInstall)
 		return
 	}
 
