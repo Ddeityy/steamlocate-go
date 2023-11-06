@@ -12,7 +12,7 @@ A (worse) Go version of [steamlocate-rs](https://github.com/WilliamVenner/steaml
 ## Using steamlocate
 Download:
 ```console
-$ go get -u github.com/Ddeityy/steamlocate-go
+$ go get -u github.com/ddeityy/steamlocate-go
 ```
 
 ## Examples
@@ -20,7 +20,7 @@ $ go get -u github.com/Ddeityy/steamlocate-go
 #### Locate the installed Steam directory
 
 ```go
-import "github.com/Ddeityy/steamlocate-go"
+import "github.com/ddeityy/steamlocate-go"
 
 var s steamlocate.SteamDir
 
@@ -37,7 +37,7 @@ SteamDir {
 #### Locate all installed Steam apps or a specific one by it's app ID
 
 ```go
-import "github.com/Ddeityy/steamlocate-go"
+import "github.com/ddeityy/steamlocate-go"
 
 var s steamlocate.SteamDir
 
@@ -60,7 +60,7 @@ Apps {
 
 #### Locate all Steam library folders
 ```go
-import "github.com/Ddeityy/steamlocate-go"
+import "github.com/ddeityy/steamlocate-go"
 
 var s steamlocate.SteamDir
 
