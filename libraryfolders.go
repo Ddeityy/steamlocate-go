@@ -9,9 +9,9 @@ type LibraryFolders struct {
 	Paths []string
 }
 
-func (lf *LibraryFolders) discover(p string) {
+func (lf *LibraryFolders) discover(steamPath string) {
 
-	vdfPath := path.Join(p, "steamapps", "libraryfolders.vdf")
+	vdfPath := path.Join(steamPath, "steamapps", "libraryfolders.vdf")
 
 	var k = parseVDF(vdfPath)
 

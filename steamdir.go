@@ -2,7 +2,7 @@ package steamlocate
 
 type SteamDir struct {
 	Path           string
-	SteamApps      SteamApps
+	SteamApps      SteamApps // steamapps folder
 	LibraryFolders LibraryFolders
 }
 

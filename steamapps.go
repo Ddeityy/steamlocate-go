@@ -8,16 +8,16 @@ import (
 
 type SteamApps struct {
 	Path string
-	Apps map[int]App
+	Apps map[int]App // Separate apps in steamapps folder
 }
 
 func (s *SteamApps) discover(steamPath string) {
-	steamApps := path.Join(steamPath, "steamapps")
-	libf := path.Join(steamApps, "libraryfolders.vdf")
+	steamApps := path.Join(steamPath, "steamapps", "libraryfolders.vdf")
+	lf := path.Join(steamApps)
 
-	appIds := make([]string, 0)
+	var appIds []string
 
-	k := parseVDF(libf)
+	k := parseVDF(lf)
 
 	for i := range k.MapKeys("libraryfolders") {
 		appIds = append(appIds, k.MapKeys(fmt.Sprintf("libraryfolders.%d.apps", i))...)
