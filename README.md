@@ -4,7 +4,7 @@ A (worse) Go version of [steamlocate-rs](https://github.com/WilliamVenner/steaml
 
 **This library supports Linux, Windows and Macos.**
 
-##TODO
+## TODO
 * Shortcuts (non-steam games)
 * Steam compatibility tools (proton etc.)
 
