@@ -15,9 +15,9 @@ func (s *SteamDir) locate() {
 	var err error
 
 	switch runtime.GOARCH {
-	case "386":
-		k, err = registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\WOW6432Node\Valve\Steam`, registry.QUERY_VALUE)
 	case "amd64":
+		k, err = registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\WOW6432Node\Valve\Steam`, registry.QUERY_VALUE)
+	case "386":
 		k, err = registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Valve\Steam`, registry.QUERY_VALUE)
 	default:
 		log.Fatalf("Failed to locate steam.")
