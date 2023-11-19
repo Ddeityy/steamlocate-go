@@ -19,8 +19,8 @@ func (s *SteamDir) locate() {
 		k, err = registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Wow6432Node\Valve\Steam`, registry.QUERY_VALUE)
 	case "amd64":
 		k, err = registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\Valve\Steam`, registry.QUERY_VALUE)
-	_:
-		log.Println("???")
+	default:
+		log.Fatalf("Failed to locate steam.")
 	}
 	if err != nil {
 		log.Fatalf("Failed to locate steam.")
