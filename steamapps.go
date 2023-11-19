@@ -12,8 +12,8 @@ type SteamApps struct {
 }
 
 func (s *SteamApps) discover(steamPath string) {
-	steamApps := path.Join(steamPath, "steamapps", "libraryfolders.vdf")
-	lf := path.Join(steamApps)
+	steamApps := path.Join(steamPath, "steamapps")
+	lf := path.Join(steamApps, "libraryfolders.vdf")
 
 	var appIds []string
 
