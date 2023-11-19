@@ -22,7 +22,7 @@ func (s *SteamDir) locate() {
 	default:
 		log.Fatalf("Failed to locate steam.")
 	}
-
+	log.Println(k)
 	log.Println(err)
 
 	if err != nil {
