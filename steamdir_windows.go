@@ -33,6 +33,6 @@ func (s *SteamDir) locate() {
 		log.Fatal(err)
 	}
 	s.Path = steamPath
-	s.LibraryFolders.discover(steamPath)
-	s.SteamApps.discover(steamPath)
+	s.LibraryFolders.SteamDir.Path = steamPath
+	s.SteamApps.SteamDir.Path = steamPath
 }

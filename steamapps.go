@@ -1,38 +1,49 @@
 package steamlocate
 
 import (
-	"fmt"
+	"log"
+	"os"
 	"path"
 	"strconv"
+	"strings"
 )
 
 type SteamApps struct {
-	Path string
-	Apps map[int]App // Separate apps in steamapps folder
+	SteamDir *SteamDir
+	Paths    []string
+	Apps     map[int]App // Separate apps in steamapps folder
 }
 
-func (s *SteamApps) discover(steamPath string) {
-	steamApps := path.Join(steamPath, "steamapps")
-	lf := path.Join(steamApps, "libraryfolders.vdf")
+func (s *SteamApps) Discover() {
+	s.SteamDir.LibraryFolders.Discover()
 
-	var appIds []string
+	var appIds []int
+	for _, lfpath := range s.SteamDir.LibraryFolders.Paths {
+		s.Paths = append(s.Paths, lfpath, "steamapps")
+		apps, err := os.ReadDir(path.Join(lfpath, "steamapps"))
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	k := parseVDF(lf)
-
-	for i := range k.MapKeys("libraryfolders") {
-		appIds = append(appIds, k.MapKeys(fmt.Sprintf("libraryfolders.%d.apps", i))...)
+		for _, file := range apps {
+			if strings.Contains(file.Name(), "appmanifest_") {
+				id, err := strconv.Atoi(strings.TrimSuffix(strings.Split(file.Name(), "_")[1], ".dem"))
+				if err != nil {
+					log.Panic(err)
+				}
+				appIds = append(appIds, id)
+			}
+		}
 	}
-
-	s.Path = steamApps
 
 	s.Apps = make(map[int]App)
 
-	for _, value := range appIds {
-		id, err := strconv.Atoi(value)
-		if err != nil {
-			panic(err)
+	for _, id := range appIds {
+		var app App
+
+		for _, spath := range s.Paths {
+			app = newApp(spath, id)
+			s.Apps[id] = app
 		}
-		app := newApp(steamApps, id)
-		s.Apps[id] = app
 	}
 }
