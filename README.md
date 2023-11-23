@@ -42,6 +42,7 @@ import "github.com/ddeityy/steamlocate-go"
 var s steamlocate.SteamDir
 
 s.Locate()
+s.SteamApps.Discover()
 
 fmt.Println(s.SteamApps.Apps)
 
@@ -65,6 +66,7 @@ import "github.com/ddeityy/steamlocate-go"
 var s steamlocate.SteamDir
 
 s.Locate()
+s.LibraryFolders.Discover()
 
 fmt.Println(s.LibraryFolders.Paths)
 ```
