@@ -6,13 +6,12 @@ import (
 )
 
 type LibraryFolders struct {
-	SteamDir *SteamDir
-	Paths    []string
+	Paths []string
 }
 
-func (lf *LibraryFolders) Discover() {
+func (lf *LibraryFolders) discover(steamPath string) {
 
-	vdfPath := path.Join(lf.SteamDir.Path, "steamapps", "libraryfolders.vdf")
+	vdfPath := path.Join(steamPath, "steamapps", "libraryfolders.vdf")
 
 	var k = parseVDF(vdfPath)
 

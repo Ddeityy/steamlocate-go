@@ -9,25 +9,22 @@ import (
 )
 
 type SteamApps struct {
-	SteamDir *SteamDir
-	Paths    []string
-	Apps     map[int]App // Separate apps in steamapps folder
+	Paths []string
+	Apps  map[int]App // Separate apps in steamapps folder
 }
 
-func (s *SteamApps) Discover() {
-	s.SteamDir.LibraryFolders.Discover()
-
+func (s *SteamApps) discover(steamPath string, lfPaths []string) {
 	var appIds []int
-	for _, lfpath := range s.SteamDir.LibraryFolders.Paths {
-		s.Paths = append(s.Paths, lfpath, "steamapps")
-		apps, err := os.ReadDir(path.Join(lfpath, "steamapps"))
+	for _, lfpath := range lfPaths {
+		s.Paths = append(s.Paths, lfpath)
+		apps, err := os.ReadDir(path.Join(lfpath))
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		for _, file := range apps {
 			if strings.Contains(file.Name(), "appmanifest_") {
-				id, err := strconv.Atoi(strings.TrimSuffix(strings.Split(file.Name(), "_")[1], ".dem"))
+				id, err := strconv.Atoi(strings.TrimSuffix(strings.Split(file.Name(), "_")[1], ".acf"))
 				if err != nil {
 					log.Panic(err)
 				}

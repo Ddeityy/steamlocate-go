@@ -25,8 +25,8 @@ func (s *SteamDir) locate() {
 		log.Println("Standard installation not found")
 	} else {
 		s.Path = standardInstall
-		s.LibraryFolders.SteamDir.Path = standardInstall
-		s.SteamApps.SteamDir.Path = standardInstall
+		s.LibraryFolders.discover(standardInstall)
+		s.SteamApps.discover(standardInstall, s.LibraryFolders.Paths)
 		return
 	}
 
@@ -37,8 +37,8 @@ func (s *SteamDir) locate() {
 		log.Println("Flatpak installation not found")
 	} else {
 		s.Path = flatpakInstall
-		s.LibraryFolders.SteamDir.Path = standardInstall
-		s.SteamApps.SteamDir.Path = standardInstall
+		s.LibraryFolders.discover(flatpakInstall)
+		s.SteamApps.discover(flatpakInstall, s.LibraryFolders.Paths)
 		return
 	}
 
