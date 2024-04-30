@@ -9,8 +9,6 @@ A (worse) Go version of [steamlocate-rs](https://github.com/WilliamVenner/steaml
 * Shortcuts (non-steam games)
 * Steam compatibility tools (proton etc.)
 
-## Using steamlocate
-
 Download:
 
 ```console
@@ -34,11 +32,11 @@ fmt.Println(s.Path)
 
 ```go
 SteamDir {
-    Path string: "/home/$USER/.steam/steam"
+    "/home/$USER/.steam/steam"
 }
 ```
 
-### Locate all installed Steam apps or a specific one by it's app ID
+### Locate all installed Steam apps or a specific one by its app ID
 
 ```go
 import "github.com/ddeityy/steamlocate-go"
