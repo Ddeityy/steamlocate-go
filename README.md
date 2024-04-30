@@ -5,69 +5,73 @@ A (worse) Go version of [steamlocate-rs](https://github.com/WilliamVenner/steaml
 **This library supports Linux, Windows and Macos.**
 
 ## TODO
+
 * Shortcuts (non-steam games)
 * Steam compatibility tools (proton etc.)
 
-
 ## Using steamlocate
+
 Download:
+
 ```console
-$ go get -u github.com/ddeityy/steamlocate-go
+go get -u github.com/ddeityy/steamlocate-go
 ```
 
 ## Examples
 
-#### Locate the installed Steam directory
+### Locate the installed Steam directory
 
 ```go
 import "github.com/ddeityy/steamlocate-go"
 
-var s steamlocate.SteamDir
-
-s.Locate()
+s := steamlocatego.SteamDir{}
+if err := s.Locate(); err != nil {
+    log.Fatalln(err)
+}
 
 fmt.Println(s.Path)
 ```
+
 ```go
 SteamDir {
     Path string: "/home/$USER/.steam/steam"
 }
 ```
 
-#### Locate all installed Steam apps or a specific one by it's app ID
+### Locate all installed Steam apps or a specific one by it's app ID
 
 ```go
 import "github.com/ddeityy/steamlocate-go"
 
-var s steamlocate.SteamDir
+s := steamlocatego.SteamDir{}
+if err := s.Locate(); err != nil {
+    log.Fatalln(err)
+}
 
-s.Locate()
-
-fmt.Println(s.SteamApps.Apps)
-
-fmt.Println(s.SteamApps.Apps[440].Name)
-
+fmt.Println(s.LibraryFolders[0].SteamApps.Apps[440])
 ```
+
 ```go
-Apps {
-    440: {
-    ID int: 440 
-    Path string: /home/deity/.steam/steam/steamapps/common/Team Fortress 2
-    Name string: Team Fortress 2}
-    ...
+App {
+    440
+    /home/$USER/.local/share/Steam/steamapps/common/Team Fortress 2
+    Team Fortress 2
 }
 ```
 
 #### Locate all Steam library folders
+
 ```go
 import "github.com/ddeityy/steamlocate-go"
 
-var s steamlocate.SteamDir
+s := steamlocatego.SteamDir{}
+if err := s.Locate(); err != nil {
+    log.Fatalln(err)
+}
 
-s.Locate()
-
-fmt.Println(s.LibraryFolders.Paths)
+fmt.Println(s.LibraryFolders)
 ```
+
 ```go
 {
     "/home/$USER/.steam/steam/steamapps"

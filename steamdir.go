@@ -2,11 +2,9 @@ package steamlocate
 
 type SteamDir struct {
 	Path           string
-	SteamApps      SteamApps // steamapps folder
-	LibraryFolders LibraryFolders
+	LibraryFolders []LibraryFolder
 }
 
-// Initializes the SteamDir struct and locates everything.
-func (s *SteamDir) Locate() {
-	s.locate()
+func (s *SteamDir) Locate() error {
+	return s.locate()
 }

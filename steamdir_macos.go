@@ -4,21 +4,29 @@
 package steamlocate
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"path"
 )
 
-func (s *SteamDir) locate() {
+func locateHomeDir() string {
+	return os.Getenv("HOME")
+}
+
+func (s *SteamDir) locate() error {
 	homeDir := locateHomeDir()
 
 	steamPath := path.Join(homeDir, "Library", "Application Support", "Steam")
-
-	if _, err := os.Stat(steamPath); os.IsNotExist(err) {
-		log.Fatalf("Steam not found.")
+	if err := PathExists(steamPath); err != nil {
+		return fmt.Errorf("no steam installation found: %w", err)
 	}
 	s.Path = steamPath
-	s.LibraryFolders.discover(steamPath)
-	s.SteamApps.discover(steamPath)
-	return
+
+	libraryFolders, err := discoverLibraryFolders(steamPath)
+	if err != nil {
+		return fmt.Errorf("discoverLibraryFolders: %w", err)
+	}
+	s.LibraryFolders = libraryFolders
+
+	return nil
 }

@@ -6,10 +6,11 @@ import (
 	"fmt"
 	"strings"
 
+	"log"
+
 	"github.com/andygrunwald/vdf"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/v2"
-	"log"
 )
 
 type VDF struct{}

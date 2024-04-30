@@ -1,13 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
-	"github.com/ddeityy/steamlocate-go"
+	steamlocatego "github.com/ddeityy/steamlocate-go"
 )
 
 func main() {
-	s := steamlocate.SteamDir{}
-	s.Locate()
-	fmt.Println(s.SteamApps.Apps[440].Path)
+	s := steamlocatego.SteamDir{}
+	if err := s.Locate(); err != nil {
+		log.Fatalln(err)
+	}
+	log.Printf("%+v", s.LibraryFolders[0].SteamApps.Apps[440])
 }

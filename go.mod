@@ -1,6 +1,6 @@
 module github.com/ddeityy/steamlocate-go
 
-go 1.21.1
+go 1.22
 
 require (
 	github.com/andygrunwald/vdf v1.1.0

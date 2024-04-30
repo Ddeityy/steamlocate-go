@@ -4,6 +4,7 @@
 package steamlocate
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path"
@@ -13,35 +14,37 @@ func locateHomeDir() string {
 	return os.Getenv("HOME")
 }
 
-func (s *SteamDir) locate() {
-
+func (s *SteamDir) locate() error {
 	homeDir := locateHomeDir()
 	steamPath := path.Join(".steam", "steam")
 
-	// Check normal installation
 	standardInstall := path.Join(homeDir, steamPath)
 
-	if _, err := os.Stat(standardInstall); os.IsNotExist(err) {
+	if err := PathExists(standardInstall); err != nil {
 		log.Println("Standard installation not found")
 	} else {
 		s.Path = standardInstall
-		s.LibraryFolders.discover(standardInstall)
-		s.SteamApps.discover(standardInstall, s.LibraryFolders.Paths)
-		return
+		libraryFolders, err := discoverLibraryFolders(standardInstall)
+		if err != nil {
+			return fmt.Errorf("discoverLibraryFolders: %w", err)
+		}
+		s.LibraryFolders = libraryFolders
+		return nil
 	}
 
-	// Check flatpak installation
 	var flatpakInstall string = path.Join(homeDir, ".var", "app", "com.valvesoftware.Steam", steamPath)
 
-	if _, err := os.Stat(flatpakInstall); os.IsNotExist(err) {
+	if err := PathExists(flatpakInstall); err != nil {
 		log.Println("Flatpak installation not found")
 	} else {
 		s.Path = flatpakInstall
-		s.LibraryFolders.discover(flatpakInstall)
-		s.SteamApps.discover(flatpakInstall, s.LibraryFolders.Paths)
-		return
+		libraryFolders, err := discoverLibraryFolders(standardInstall)
+		if err != nil {
+			return fmt.Errorf("discoverLibraryFolders: %w", err)
+		}
+		s.LibraryFolders = libraryFolders
+		return nil
 	}
 
-	log.Fatalf("No steam installations found.")
-
+	return fmt.Errorf("no steam installations found")
 }

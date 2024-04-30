@@ -11,15 +11,23 @@ type App struct {
 	Name string
 }
 
-func newApp(steamappsPath string, id int) App {
-	vdfPath := path.Join(steamappsPath, fmt.Sprintf("appmanifest_%d.acf", id))
-	k := parseVDF(vdfPath)
-
-	path := path.Join(steamappsPath, "common", k.String("AppState.installdir"))
-
-	return App{
-		Id:   id,
-		Path: path,
-		Name: k.String("AppState.name"),
+func (a *App) New(steamappsPath string, id int) error {
+	appmanifestPath := path.Join(steamappsPath, fmt.Sprintf("appmanifest_%d.acf", id))
+	if err := PathExists(appmanifestPath); err != nil {
+		return fmt.Errorf("PathExists: %w", err)
 	}
+
+	k := parseVDF(appmanifestPath)
+
+	appPath := path.Join(steamappsPath, "common", k.String("AppState.installdir"))
+
+	if err := PathExists(appPath); err != nil {
+		return fmt.Errorf("PathExists: %w", err)
+	}
+
+	a.Path = appPath
+	a.Id = id
+	a.Name = k.String("AppState.name")
+
+	return nil
 }
