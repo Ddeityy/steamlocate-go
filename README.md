@@ -46,7 +46,9 @@ if err := s.Locate(); err != nil {
     log.Fatalln(err)
 }
 
-fmt.Println(s.LibraryFolders[0].SteamApps.Apps[440])
+tf2 := s.FindApp(440)
+
+fmt.Println(tf2)
 ```
 
 ```go
